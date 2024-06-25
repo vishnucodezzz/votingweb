@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-   
+    
 	private static final long serialVersionUID = 1L;
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/voting_system";
     private static final String DB_USERNAME = "root";
@@ -30,7 +30,7 @@ public class RegisterServlet extends HttpServlet {
         String voter_id = request.getParameter("voterid");
         String phone_no= request.getParameter("phoneno");
         String aadhar_no= request.getParameter("aadharno");
-        PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter(); 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
@@ -44,9 +44,12 @@ public class RegisterServlet extends HttpServlet {
             
 
             int count = preparedStatement.executeUpdate();
-            
+            response.setContentType("text/html");
+           
             if (count > 0) {
+            	response.sendRedirect("login.html");
                 out.println("<h3>User registered successfully.</h3>");
+                
             } else {
                 out.println("<h3>User registration failed.</h3>");
             }
